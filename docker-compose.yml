@@ -48,9 +48,13 @@ services:
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
+      # 任意のサーバーへの接続が許可される
       - PMA_HOST=mysql
+      # SQLサーバーのホスト名かIPアドレスを指定
       - PMA_USER=root
+      # SQLサーバーに接続するユーザー名
       - PMA_PASSWORD=secret
+      # SQLサーバーに接続するユーザーのパスワード
     links:
       - mysql
     ports:
