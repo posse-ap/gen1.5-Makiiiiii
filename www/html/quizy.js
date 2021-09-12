@@ -1,3 +1,6 @@
+// let array = JSON.parse('<?php echo $jsonArray?>');
+// console.log(array);
+
 // 選択肢
 const sentakushi = [["たかなわ", "こうわ", "たかわ"],
 ["かめいど", "かめと", "かめど"],
@@ -38,7 +41,8 @@ var arr = [];
 // それぞれの問題表示
 for (let i = 0; i < 10; i++){
     
-    let x = 
+    
+    let x =
     '<div class="quiz">' +
     `<h3><span class="chimei">${i + 1}.この地名はなんて読む？</span></h3>` +
     `<img src="./image/${i}.png">` +
