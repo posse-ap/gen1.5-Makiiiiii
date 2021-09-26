@@ -3,19 +3,10 @@ require('dbconnect.php');
 
 $id = $_GET['id'];
 $stmt = $db->query("SELECT area FROM areas WHERE id = $id");
+$questions = array();
 
-// print_r($stmt);
-
-// $questions = $db->query("SELECT * FROM questions WHERE area_id = $id");
-
-// print_r($questions);
-// $jsonArray = json_encode($questions);
-
-for($i = 0; $i < 11; $i++){
-  $questions = $db->query("SELECT * FROM questions WHERE area_id = $id AND question_id = $i");
-  print_r($questions);
-}
-
+$stmtQuestions =  $db->query("SELECT * FROM questions WHERE area_id = $id");
+$questions = $stmtQuestions->fetchAll();
 
 ?>
 
@@ -38,10 +29,32 @@ for($i = 0; $i < 11; $i++){
     ?>
   </h1>
   
+  <?php 
+    foreach($questions as $question) {
+  ?>
+  <div class="quiz">
+    <h3><span class="chimei"><?= $question["question_id"] ?>.この地名はなんて読む？</span></h3>
+    <img src="./image/<?= $question["area_id"] . '-' . $question["question_id"] ?>.png">
+    <ul>
+      <?php
+          $random = array(1, 2, 3);
+          shuffle($random);
+        for($j = 0; $j < 3; $j++){
+      ?>
+        <li class="list" id="<?= $question["question_id"] . "_" . $random[$j] ?>" onclick="judge(<?= $question['question_id'] . ',' . $random[$j]?>)"><?= $question["answer_$random[$j]"]?></li>
+      <?php
+        }
+      ?>
+    </ul>
+    
+    <div class="torf" id="<?= $question["question_id"] ?>">
+      <p id="result<?= $question["question_id"] ?>"></p>
+      <p id="resultText<?= $question["question_id"] ?>">正解は「<?= $question["answer_1"] ?>」です！</p>
+    </div>
+  </div>
+
   <?php
-      foreach ($questions as $question) {
-        echo $question['answer_1'];
-      }
+    }
   ?>
 
 <script src="quizy.js"></script>

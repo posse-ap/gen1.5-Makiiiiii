@@ -1,7 +1,8 @@
-# ビルド元のDockerイメージに、php:7.4-fpmを指定。イメージ名
-FROM php:7.4-fpm
-
-# php.iniをコンテナにコピーしたい場合はここに記述
-COPY php.ini /usr/local/etc/php/
-
-# FROMのイメージにCOPYのこれを追加しますよ
+FROM php:7.4.7-fpm
+WORKDIR /var/www/html
+RUN apt-get update \
+  && docker-php-ext-install pdo_mysql
+RUN curl -sSL https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 -o mhsendmail \
+  && chmod +x mhsendmail \
+  && mv mhsendmail /usr/local/bin/mhsendmail
+COPY ./php.ini /usr/local/etc/php/

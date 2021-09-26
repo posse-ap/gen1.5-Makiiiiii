@@ -1,5 +1,5 @@
 <?php
-$dsn = 'mysql:host=mysql;dbname=kuizy;charset=utf8;';
+$dsn = 'mysql:host=mysql;dbname=kuizy;charset=utf8mb4;';
 $user = 'root';
 $password = 'secret';
 

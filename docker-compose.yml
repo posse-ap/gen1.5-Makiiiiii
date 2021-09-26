@@ -26,6 +26,7 @@ services:
     # image⇒とってきてるだけ
     # build⇒追加してる。説明書を使ってくれよ
     volumes:
+      - ./php/php.ini:/usr/local/etc/php/php.ini
       - ./www/html:/var/www/html
       # www/htmlをコンテナの/var/www/htmlにマウント
     depends_on:
@@ -38,8 +39,11 @@ services:
       - 3306:3306
       # localhostの3306番ポートとdockerコンテナの3306番ポートをバインド
     volumes:
-      - ./mysql/data:/var/lib/mysql
       # ./mysql/dataをコンテナの/var/lib/mysqlにマウント
+      - ./mysql/sql:/docker-entrypoint-initdb.d
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/my.cnf/my.cnf:/etc/mysql/conf.d/my.cnf
+
     environment:
       MYSQL_ROOT_PASSWORD: secret
       # mysqlのルートに入るパスワード
@@ -58,6 +62,6 @@ services:
     links:
       - mysql
     ports:
-        - 8000:80
+      - 8000:80
     volumes:
       - /sessions

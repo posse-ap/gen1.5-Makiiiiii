@@ -1,66 +1,43 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- ホスト: mysql
--- 生成日時: 2021 年 9 月 09 日 12:54
--- サーバのバージョン： 5.7.34
--- PHP のバージョン: 7.4.20
+DROP SCHEMA IF EXISTS kuizy;
+CREATE SCHEMA kuizy;
+USE kuizy;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+DROP TABLE IF EXISTS areas;
+CREATE TABLE areas (
+  id int(11) NOT NULL,
+  area varchar(100) CHARACTER SET utf8 NOT NULL
+);
 
+INSERT INTO areas SET id=1, area='東京の難読地名クイズ';
+INSERT INTO areas SET id=2, area='広島の難読地名クイズ';
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+DROP TABLE IF EXISTS questions;
+CREATE TABLE questions (
+  area_id int(11) NOT NULL,
+  question_id int(11) NOT NULL,
+  answer_1 varchar(100) CHARACTER SET utf8 NOT NULL,
+  answer_2 varchar(100) CHARACTER SET utf8 NOT NULL,
+  answer_3 varchar(100) CHARACTER SET utf8 NOT NULL
+);
 
---
--- データベース: `kuizy`
---
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `questions`
---
-
-CREATE TABLE `questions` (
-  `id` int(11) NOT NULL,
-  `area` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- テーブルのデータのダンプ `questions`
---
-
-INSERT INTO `questions` (`id`, `area`) VALUES
-(1, '東京の難読地名クイズ'),
-(2, '広島の難読地名クイズ');
-
---
--- ダンプしたテーブルのインデックス
---
-
---
--- テーブルのインデックス `questions`
---
-ALTER TABLE `questions`
-  ADD PRIMARY KEY (`id`);
-
---
--- ダンプしたテーブルの AUTO_INCREMENT
---
-
---
--- テーブルの AUTO_INCREMENT `questions`
---
-ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO questions (area_id, question_id, answer_1, answer_2, answer_3) VALUES
+(1, 1, 'たかなわ', 'こうわ', 'たかわ'),
+(1, 2, 'かめいど', 'かめと', 'かめど'),
+(1, 3, 'こうじまち', 'かゆまち', 'おかとまち'),
+(1, 4, 'おなりもん', 'おかどもん', 'ごせいもん'),
+(1, 5, 'とどろき', 'たたら', 'たたろき'),
+(1, 6, 'しゃくじい', 'せきこうい', 'いじい'),
+(1, 7, 'ぞうしき', 'ざっしき', 'ざっしょく'),
+(1, 8, 'おかちまち', 'みとちょう', 'ごしろちょう'),
+(1, 9, 'ししぼね', 'ろっこつ', 'しこね'),
+(1, 10, 'こぐれ', 'こばく', 'こしゃく'),
+(2, 1, 'いばらいち', 'せいげんち', 'いのはらし'),
+(2, 2, 'かるが', 'いがるけ', 'かりどめや'),
+(2, 3, 'へら', 'たいら', 'ひらよし'),
+(2, 4, 'すもも', 'ざくろ', 'はっさく'),
+(2, 5, 'おにはら', 'ほにわ', 'こじぼら'),
+(2, 6, 'あぞうだに', 'あそご', 'ゆうげ'),
+(2, 7, 'おなごばた', 'めこばた', 'にょしら'),
+(2, 8, 'むかいなだ', 'かなた', 'むこうみ'),
+(2, 9, 'ひととばら', 'もずはら', 'しのめはら'),
+(2, 10, 'おかじま', 'ちかじま', 'こわしま');
