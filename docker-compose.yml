@@ -1,0 +1,67 @@
+version: '3'
+services:
+  nginx: # ここの名前はなんでも大丈夫
+    image: nginx:latest
+    # nginx:latestイメージを元にビルド
+    # docker hubからとってきてる
+    # js,html,cssをweb上に表示するだけ⇒php表示できない
+    ports:
+      - 8080:80
+      # localhostの8080番ポートとdockerコンテナの80番ポートをバインド
+    volumes:
+      # ローカルのリソースをコンテナにマウント
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      # 左側ローカル：右側リモート
+      # nginx.confとdefault.confが対応してる
+      - ./www/html:/var/www/html
+    depends_on:
+      - php
+      # phpコンテナに依存
+      # phpを元にたてますよ
+      # 起動する順番
+
+  php:
+    build: ./php
+    # php/Dockerfileを元にビルド
+    # image⇒とってきてるだけ
+    # build⇒追加してる。説明書を使ってくれよ
+    volumes:
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+      - ./www/html:/var/www/html
+      # www/htmlをコンテナの/var/www/htmlにマウント
+    depends_on:
+      - mysql
+      # dbコンテナに依存
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+      # localhostの3306番ポートとdockerコンテナの3306番ポートをバインド
+    volumes:
+      # ./mysql/dataをコンテナの/var/lib/mysqlにマウント
+      - ./mysql/sql:/docker-entrypoint-initdb.d
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      # mysqlのルートに入るパスワード
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      # 任意のサーバーへの接続が許可される
+      - PMA_HOST=mysql
+      # SQLサーバーのホスト名かIPアドレスを指定
+      - PMA_USER=root
+      # SQLサーバーに接続するユーザー名
+      - PMA_PASSWORD=secret
+      # SQLサーバーに接続するユーザーのパスワード
+    links:
+      - mysql
+    ports:
+      - 8000:80
+    volumes:
+      - /sessions
