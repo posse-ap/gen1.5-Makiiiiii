@@ -5,8 +5,25 @@ $stmt = $db->query("SELECT * FROM studylog");
 
 $sql = $stmt->fetchAll();
 
-// var_dump($sql);
+// print_r($sql);
 
+// $studyTime = $db->query("SELECT study_time FROM studylog where study_date = DATE(NOW())");
+
+$todayTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m%d')=20210905");
+$todayStudyTime = $todayTimeStmt->fetch();
+
+$monthTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109");
+$monthStudyTime = $monthTimeStmt->fetch();
+
+$totalTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog");
+$totalStudyTime = $totalTimeStmt->fetch();
+
+// print_r($weekStudyTime);
+
+$graphTimeStmt = $db->query("SELECT study_time FROM studylog");
+$graphTime = $graphTimeStmt->fetchAll();
+
+print_r($graphTime);
 ?>
 
 <!DOCTYPE html>
@@ -87,9 +104,6 @@ $sql = $stmt->fetchAll();
               </label>
             </div>
           </div><!--study-content-->
-
-          
-
 
           <h1>学習言語（複数選択可)</h1>
           <div class="study-content">
@@ -216,8 +230,6 @@ $sql = $stmt->fetchAll();
     </div>
 
     <div class="black-background" id="js-black-bg"></div>
-
-    
     
   </div>
   
@@ -239,19 +251,25 @@ $sql = $stmt->fetchAll();
         <div class="three">
           <div class="today">
             <h1 class="period">Today</h1>
-            <p class="figure">3</p>
+            <p class="figure">
+              <?= $todayStudyTime["sum_study_time"] ?>
+            </p>
             <p class="hour">hour</p>
           </div>
 
           <div class="month">
             <h1 class="period">Month</h1>
-            <p class="figure">120</p>
+            <p class="figure">
+              <?= $monthStudyTime["sum_study_time"] ?>
+            </p>
             <p class="hour">hour</p>
           </div>
 
           <div class="total">
             <h1 class="period">Total</h1>
-            <p class="figure">1348</p>
+            <p class="figure">
+              <?= $totalStudyTime["sum_study_time"] ?>
+            </p>
             <p class="hour">hour</p>
           </div>
         </div><!--three-->
@@ -313,6 +331,6 @@ $sql = $stmt->fetchAll();
 <!-- Google Chart API -->
   <script src="https://www.gstatic.com/charts/loader.js"></script>
 
-  <script src="POSSE.js"></script>
+  <script src="POSSE.php"></script>
 </body>
 </html>

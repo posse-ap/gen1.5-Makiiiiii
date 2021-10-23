@@ -1,3 +1,29 @@
+<?php
+require('dbconnect.php');
+
+$stmt = $db->query("SELECT * FROM studylog");
+
+$sql = $stmt->fetchAll();
+
+// print_r($sql);
+
+// $studyTime = $db->query("SELECT study_time FROM studylog where study_date = DATE(NOW())");
+
+$todayTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m%d')=20210905");
+$todayStudyTime = $todayTimeStmt->fetch();
+
+$monthTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109");
+$monthStudyTime = $monthTimeStmt->fetch();
+
+$totalTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog");
+$totalStudyTime = $totalTimeStmt->fetch();
+
+// $graphTimeStmt = $db->query("SELECT study_time from studylog where study_date = (SELECT study_date FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109 GROUP BY study_date) as study_date_group");
+// $graphTime = $graphTimeStmt->fetchAll();
+
+// print_r($graphTime);
+?>
+
 /**
  * PCのポップアップ
  * @popupImage 
@@ -84,74 +110,71 @@ function back() {
  * 棒グラフ
 */
 google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(
-        function() {
-            var data = google.visualization.arrayToDataTable([
-                [       '', 'time'],
-                ['1',     3],
-                ['2',     4],
-                ['3',      5],
-                ['4',     3],
-                ['5',     0],
-                ['6',     0],
-                ['7',     4],
-                ['8',     2],
-                ['9',     2],
-                ['10',     8],
-                ['11',     8],
-                ['12',     2],
-                ['13',     2],
-                ['14',     1],
-                ['15',     7],
-                ['16',     4],
-                ['17',     4],
-                ['18',     3],
-                ['19',     3],
-                ['20',     3],
-                ['21',     2],
-                ['22',     2],
-                ['23',     6],
-                ['24',     2],
-                ['25',     2],
-                ['26',     1],
-                ['27',     1],
-                ['28',     1],
-                ['29',     7],
-                ['30',     8],
-                
-            ]);
 
-            var options = {
-              lineWidth: 4, pointSize: 6,
-                      // chartArea: {width: '80%', height: '80%'},
-              hAxis:{
-                  gridlines:{color: 'none', count:10},
-                  baselineColor: 'none',
-                  textStyle:{color: 'deepskyblue'},
-                      maxTextLines:1,
-                      
-                            // maxValue:100
-                      // textPosition: 'in'
-              },
-              vAxis:{
-                  minValue:0,
-                  gridlines:{color: 'none', count:3},
-                  baselineColor: 'none',
-                  format: '#h',
-                  textStyle:{color: 'deepskyblue'},
-                          // textPosition: 'out'
-              
-              },
-              width: '100%',
-              height: '100%',
-              colors:['#3ccfff'],
-              legend: { position: 'none'} 
-              }
-    
-            var chart = new google.visualization.ColumnChart(document.getElementById('gct_sample_column'));
-            chart.draw(data,options);
-        }
-    );
+google.setOnLoadCallback(
+  function() {
+    var data = google.visualization.arrayToDataTable([
+      [       '', 'time'],
+      <?php
+        
+      ?>
+
+      ['1',     <?= $todayStudyTime["sum_study_time"]?>],
+      ['2',     4],
+      ['3',      5],
+      ['4',     3],
+      ['5',     0],
+      ['6',     0],
+      ['7',     4],
+      ['8',     2],
+      ['9',     2],
+      ['10',     8],
+      ['11',     8],
+      ['12',     2],
+      ['13',     2],
+      ['14',     1],
+      ['15',     7],
+      ['16',     4],
+      ['17',     4],
+      ['18',     3],
+      ['19',     3],
+      ['20',     3],
+      ['21',     2],
+      ['22',     2],
+      ['23',     6],
+      ['24',     2],
+      ['25',     2],
+      ['26',     1],
+      ['27',     1],
+      ['28',     1],
+      ['29',     7],
+      ['30',     8],
+    ]);
+
+    var options = {
+      lineWidth: 4, pointSize: 6,
+      hAxis:{
+        gridlines:{color: 'none', count:10},
+        baselineColor: 'none',
+        textStyle:{color: 'deepskyblue'},
+        maxTextLines:1,
+      },
+      vAxis:{
+        minValue:0,
+        gridlines:{color: 'none', count:3},
+        baselineColor: 'none',
+        format: '#h',
+        textStyle:{color: 'deepskyblue'},
+      },
+      width: '100%',
+      height: '100%',
+      colors:['#3ccfff'],
+      legend: { position: 'none'} 
+    }
+    var chart = new google.visualization.ColumnChart(document.getElementById('gct_sample_column'));
+    chart.draw(data,options);
+  }
+);
 
 /**
  * 棒グラフ
