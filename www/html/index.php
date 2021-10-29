@@ -2,14 +2,10 @@
 require('dbconnect.php');
 
 $stmt = $db->query("SELECT * FROM studylog");
-
 $sql = $stmt->fetchAll();
 
-// print_r($sql);
 
-// $studyTime = $db->query("SELECT study_time FROM studylog where study_date = DATE(NOW())");
-
-$todayTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m%d')=20210905");
+$todayTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m%d')=20210901");
 $todayStudyTime = $todayTimeStmt->fetch();
 
 $monthTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109");
@@ -18,12 +14,13 @@ $monthStudyTime = $monthTimeStmt->fetch();
 $totalTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog");
 $totalStudyTime = $totalTimeStmt->fetch();
 
-// print_r($weekStudyTime);
+// 学習コンテンツのグラフ
+$contentsStmt = $db->query("SELECT content, sum(study_time) as sum_study_time from studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109 group by content");
+$contents = $contentsStmt->fetchall();
 
-$graphTimeStmt = $db->query("SELECT study_time FROM studylog");
-$graphTime = $graphTimeStmt->fetchAll();
-
-print_r($graphTime);
+// 学習言語のグラフ
+$languagesStmt = $db->query("SELECT programming_language, sum(study_time) as sum_study_time from studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109 group by programming_language");
+$languages = $languagesStmt->fetchall();
 ?>
 
 <!DOCTYPE html>
@@ -286,14 +283,13 @@ print_r($graphTime);
           <!-- <img src="./img/language.png" alt=""> -->
           <div id="piechart1"></div>
           <ul class="lang-list">
-            <li class="lang-list1">JavaScript</li>
-            <li class="lang-list2">CSS</li>
-            <li class="lang-list3">PHP</li>
-            <li class="lang-list4">HTML</li>
-            <li class="lang-list5">Laravel</li>
-            <li class="lang-list6">SQL</li>
-            <li class="lang-list7">SHELL</li>
-            <li class="lang-list8">情報処理システム基礎知識(その他)</li>
+            <?php
+              for($i = 0; $i < 9; $i++){
+            ?>
+              <li class="lang-list<?= $i+1 ?>"><?= $languages[$i]["programming_language"] ?></li>
+            <?php 
+              }
+            ?>
           </ul>
         </div>
 
@@ -303,9 +299,13 @@ print_r($graphTime);
           <!-- <img src="./img/content.png" alt=""> -->
           <div id="piechart2"></div>
           <ul class="cont-list">
-            <li class="cont-list1">ドットインストール</li>
-            <li class="cont-list2">N予備校</li>
-            <li class="cont-list3">POSSE課題</li>
+            <?php
+              for($i = 0; $i < 3; $i++){
+            ?>
+              <li class="cont-list<?= $i+1 ?>"><?= $contents[$i]["content"] ?></li>
+            <?php 
+              }
+            ?>
           </ul>
         </div>
       </div><!--circle-->

@@ -1,27 +1,18 @@
 <?php
 require('dbconnect.php');
 
-$stmt = $db->query("SELECT * FROM studylog");
+// 棒グラフ（日ごとに時間を足してる）
+$graphTimeStmt = $db->query("SELECT study_date, sum(study_time) as sum_study_time from studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109 group by study_date");
+$graphTime = $graphTimeStmt->fetchall();
 
-$sql = $stmt->fetchAll();
+// 学習コンテンツのグラフ
+$contentsStmt = $db->query("SELECT content, sum(study_time) as sum_study_time from studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109 group by content");
+$contents = $contentsStmt->fetchall();
 
-// print_r($sql);
+// 学習言語のグラフ
+$languagesStmt = $db->query("SELECT programming_language, sum(study_time) as sum_study_time from studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109 group by programming_language");
+$languages = $languagesStmt->fetchall();
 
-// $studyTime = $db->query("SELECT study_time FROM studylog where study_date = DATE(NOW())");
-
-$todayTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m%d')=20210905");
-$todayStudyTime = $todayTimeStmt->fetch();
-
-$monthTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109");
-$monthStudyTime = $monthTimeStmt->fetch();
-
-$totalTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog");
-$totalStudyTime = $totalTimeStmt->fetch();
-
-// $graphTimeStmt = $db->query("SELECT study_time from studylog where study_date = (SELECT study_date FROM studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109 GROUP BY study_date) as study_date_group");
-// $graphTime = $graphTimeStmt->fetchAll();
-
-// print_r($graphTime);
 ?>
 
 /**
@@ -116,39 +107,12 @@ google.setOnLoadCallback(
     var data = google.visualization.arrayToDataTable([
       [       '', 'time'],
       <?php
-        
+        foreach ( $graphTime as $graph ) {
       ?>
-
-      ['1',     <?= $todayStudyTime["sum_study_time"]?>],
-      ['2',     4],
-      ['3',      5],
-      ['4',     3],
-      ['5',     0],
-      ['6',     0],
-      ['7',     4],
-      ['8',     2],
-      ['9',     2],
-      ['10',     8],
-      ['11',     8],
-      ['12',     2],
-      ['13',     2],
-      ['14',     1],
-      ['15',     7],
-      ['16',     4],
-      ['17',     4],
-      ['18',     3],
-      ['19',     3],
-      ['20',     3],
-      ['21',     2],
-      ['22',     2],
-      ['23',     6],
-      ['24',     2],
-      ['25',     2],
-      ['26',     1],
-      ['27',     1],
-      ['28',     1],
-      ['29',     7],
-      ['30',     8],
+        ['<?= substr($graph["study_date"],8,2) ?>', <?= $graph["sum_study_time"] ?>],
+      <?php 
+        }
+      ?>
     ]);
 
     var options = {
@@ -177,7 +141,7 @@ google.setOnLoadCallback(
 );
 
 /**
- * 棒グラフ
+ * 学習言語のグラフ
 */
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(langDrawChart);
@@ -186,14 +150,15 @@ function langDrawChart() {
 
     var langData = google.visualization.arrayToDataTable([ //グラフデータの指定
         ['Language', 'Hours'],
-        ['JavaScript',  10],
-        ['CSS',      20],
-        ['PHP', 5],
-        ['HTML',     30],
-        ['Laravel',    5],
-        ['SQL',    20],
-        ['SHELL',    20],
-        ['その他',    10]
+        <?php
+        foreach ($languages as $language) {
+        ?>
+          ['<?= $language["programming_language"] ?>', <?= $language["sum_study_time"] ?>],
+        <?php 
+          }
+        ?>
+
+
     ]);
 
     var langOptions = { //オプションの指定
@@ -219,9 +184,13 @@ function contDrawChart() {
 
   var contData = google.visualization.arrayToDataTable([ //グラフデータの指定
       ['Contents', 'Hours'],
-      ['ドットインストール',      20],
-      ['N予備校',     40],
-      ['課題',  40],
+      <?php
+        foreach ( $contents as $content ) {
+      ?>
+        ['<?= $content["content"] ?>', <?= $content["sum_study_time"] ?>],
+      <?php 
+        }
+      ?>
   ]);
 
   var contOptions = { //オプションの指定
