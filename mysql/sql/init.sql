@@ -42,7 +42,7 @@ INSERT INTO studylog SET study_date='2021/09/24', content='POSSE課題', program
 INSERT INTO studylog SET study_date='2021/09/25', content='N予備校', programming_language='PHP', study_time='1', comment='疲れたー';
 INSERT INTO studylog SET study_date='2021/09/26', content='ドットインストール', programming_language='PHP', study_time='5', comment='頑張りました';
 INSERT INTO studylog SET study_date='2021/09/27', content='N予備校', programming_language='Laravel', study_time='1', comment='疲れたー';
-INSERT INTO studylog SET study_date=e2021/09/28', content='ドットインストール', programming_language='PHP', study_time='15', comment='楽しかった！';
+INSERT INTO studylog SET study_date='2021/09/28', content='ドットインストール', programming_language='PHP', study_time='15', comment='楽しかった！';
 INSERT INTO studylog SET study_date='2021/09/29', content='N予備校', programming_language='PHP', study_time='2', comment='疲れたー';
 INSERT INTO studylog SET study_date='2021/09/30', content='ドットインストール', programming_language='CSS', study_time='8', comment='頑張った！';
 INSERT INTO studylog SET study_date='2021/10/01', content='ドットインストール', programming_language='HTML', study_time='2', comment='頑張った！';

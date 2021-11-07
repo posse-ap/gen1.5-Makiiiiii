@@ -14,11 +14,11 @@ $monthStudyTime = $monthTimeStmt->fetch();
 $totalTimeStmt = $db->query("SELECT sum(study_time) as sum_study_time FROM studylog");
 $totalStudyTime = $totalTimeStmt->fetch();
 
-// 学習コンテンツのグラフ
+// 学習コンテンツのグラフ下の部分
 $contentsStmt = $db->query("SELECT content, sum(study_time) as sum_study_time from studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109 group by content");
 $contents = $contentsStmt->fetchall();
 
-// 学習言語のグラフ
+// 学習言語のグラフ下の部分
 $languagesStmt = $db->query("SELECT programming_language, sum(study_time) as sum_study_time from studylog WHERE DATE_FORMAT(study_date, '%Y%m')=202109 group by programming_language");
 $languages = $languagesStmt->fetchall();
 ?>
