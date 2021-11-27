@@ -1,0 +1,73 @@
+html{
+  scroll-behavior: smooth;
+}
+
+.quiz{
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+img{
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.list{
+    box-shadow: 0px 2px 2px rgba(0,0,0,.13);
+    border:1px solid #ebebeb ;
+    box-sizing: border-box; 
+    font-weight: 600;
+    padding: 13px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+}
+
+.chimei{
+    text-align: left;
+    background: linear-gradient(transparent 60%, yellow);
+
+}
+
+.red{
+    color: white;
+    background-color: #fd6647;
+}
+
+.blue{
+    color: white;
+    background-color: #08b3f0;
+}
+
+.torf{
+    display: none;
+    padding: 17px;
+    border: 1px solid #ddd;
+}
+
+.torfHyouji{
+    display:block;
+}
+
+.aaa{
+    background: linear-gradient(transparent 70%, #fd6647 50%);
+    display: inline-block;
+    font-weight: 600;
+}
+
+.bbb{
+    background: linear-gradient(transparent 70%, #08b3f0 50%);
+    display: inline-block;
+    font-weight: 600;
+}
+
+.cantclick{
+    pointer-events: none;
+}
