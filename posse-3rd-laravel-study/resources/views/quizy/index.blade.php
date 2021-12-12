@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -6,14 +7,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>quizy</title>
+
 </head>
 
 <body>
-    @foreach ($areas as $area)
-        <h1 class="quiz">
-            {{$area}}
-        </h1>
-    @endforeach
+    <h1 class="quiz">
+        {{$area['area']}}
+    </h1>
+
+
+        <div class="quiz">
+            <h3>{{$area->question}}.この地名はなんて読む？</span></h3>
+
+        </div>
+
+
 
 
 

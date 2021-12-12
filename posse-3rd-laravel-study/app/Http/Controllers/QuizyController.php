@@ -8,10 +8,13 @@ use App\Area;
 
 class QuizyController extends Controller
 {
-    public function index() {
+    public function index($id) {
         
-        $areas = Area::all();
+        $area = Area::with(['questions.choices'])->find($id);
+        // dd($area);
+        // dd($area->questions()->first()->choices()->first());
+        // dd($id);
 
-        return view('quizy.index',['areas'=>$areas]);
+        return view('quizy.index', ['area'=>$area]);
     }
 }
