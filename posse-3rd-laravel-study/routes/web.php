@@ -15,5 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('quiz/{id}', 'QuizyController@index');
+Route::get('quiz/{id?}', 'QuizyController@index');
 
