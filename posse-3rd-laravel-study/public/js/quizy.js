@@ -1,7 +1,5 @@
 // 正誤判定
 function judge(parts, questions) {
-    console.log("できたよ")
-
     var click = document.getElementById(`${parts}_${questions}`);
     click_json = click.textContent;
     

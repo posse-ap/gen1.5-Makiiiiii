@@ -17,3 +17,10 @@ Route::get('/', function () {
 
 Route::get('quiz/{id?}', 'QuizyController@index');
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/quiz', 'HomeController@index')->name('quiz')->middleware('auth');
+
+Route::resource('/edittitle', 'EdittitleController');
