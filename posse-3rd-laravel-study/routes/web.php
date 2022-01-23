@@ -24,3 +24,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/quiz', 'HomeController@index')->name('quiz')->middleware('auth');
 
 Route::resource('/edittitle', 'EdittitleController');
+
+// Route::get('/edittitle', 'EdittitleController@list');
