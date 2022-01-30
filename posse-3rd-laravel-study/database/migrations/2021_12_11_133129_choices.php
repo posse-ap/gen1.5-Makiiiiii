@@ -18,7 +18,6 @@ class Choices extends Migration
             $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')->references('id')->on('questions')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->string('name');
-            $table->boolean('correct');
             $table->integer('choice_id');
             $table->timestamps();
         });

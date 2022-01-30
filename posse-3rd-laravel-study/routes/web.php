@@ -25,4 +25,20 @@ Route::get('/quiz', 'HomeController@index')->name('quiz')->middleware('auth');
 
 Route::resource('/edittitle', 'EdittitleController');
 
+// Route::resource('/editquestion', 'EditquestionController');
+
+Route::get('/editquestion/{area_id}', 'EditquestionController@index')->name('editquestion_index');
+Route::post('/editquestion/{area_id}', 'EditquestionController@store')->name('editquestion_store');
+Route::get('/editquestion/{area_id}/{id}/edit', 'EditquestionController@edit')->name('editquestion_edit');
+Route::post('/editquestion/{area_id}/{id}/edit', 'EditquestionController@update')->name('editquestion_update');
+Route::post('/editquestion/{area_id}/{id}/destroy', 'EditquestionController@destroy')->name('editquestion_destroy');
+
+Route::get('/editchoice/{question_id}', 'EditchoiceController@index')->name('editchoice_index');
+Route::post('/editchoice/{question_id}', 'EditchoiceController@store')->name('editchoice_store');
+Route::post('/editchoice/{question_id}/{id}/destroy', 'EditchoiceController@destroy')->name('editchoice_destroy');
+Route::get('/editchoice/{question_id}/{id}/edit', 'EditchoiceController@edit')->name('editchoice_edit');
+Route::post('/editchoice/{question_id}/{id}/edit', 'EditchoiceController@update')->name('editchoice_update');
+
+
+
 // Route::get('/edittitle', 'EdittitleController@list');

@@ -28,7 +28,7 @@
     @foreach ($areas as $area)
     <tr>
         <td>
-            {{ $area->area }}
+            <a href="/editquestion/{{ $area->id }}">{{ $area->area }}</a>
             {{ $area->created_at }}
         </td>
         <th>

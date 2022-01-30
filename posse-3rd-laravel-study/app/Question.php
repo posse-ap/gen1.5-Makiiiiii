@@ -10,4 +10,9 @@ class Question extends Model
     {
         return $this->hasMany('App\Choice');
     }
+
+    protected $fillable = [
+        'area_id',
+        'image_path',
+    ];
 }
