@@ -18,6 +18,7 @@ class Questions extends Migration
             $table->string('image_path');
             $table->unsignedBigInteger('area_id');
             $table->foreign('area_id')->references('id')->on('areas')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->integer('list');
             $table->timestamps();
         });
     }

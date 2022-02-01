@@ -24,11 +24,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/quiz', 'HomeController@index')->name('quiz')->middleware('auth');
 
 Route::resource('/edittitle', 'EdittitleController');
+Route::post('/edittitle/list', 'EdittitleController@list')->name('edittitle_list');
 
 // Route::resource('/editquestion', 'EditquestionController');
 
 Route::get('/editquestion/{area_id}', 'EditquestionController@index')->name('editquestion_index');
 Route::post('/editquestion/{area_id}', 'EditquestionController@store')->name('editquestion_store');
+Route::post('/editquestion/{area_id}/list', 'EditquestionController@list')->name('editquestion_list');
 Route::get('/editquestion/{area_id}/{id}/edit', 'EditquestionController@edit')->name('editquestion_edit');
 Route::post('/editquestion/{area_id}/{id}/edit', 'EditquestionController@update')->name('editquestion_update');
 Route::post('/editquestion/{area_id}/{id}/destroy', 'EditquestionController@destroy')->name('editquestion_destroy');

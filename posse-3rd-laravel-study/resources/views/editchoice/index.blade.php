@@ -1,4 +1,4 @@
-<h3>選択肢編集画面</h3>
+<h1>選択肢編集画面</h1>
 
 @if ($message = Session::get('success'))
 <p>{{ $message }}</p>
@@ -20,7 +20,6 @@
         <th>選択肢</th>
         <th>編集</th>
         <th>削除</th>
-        <th>移動</th>
     </tr>
     @foreach ($choices as $choice)
     <tr>
@@ -39,9 +38,7 @@
                 <input type="submit" name="" value="削除">
             </form>
         </th>
-        <th>
-
-        </th>
     </tr>
+    
     @endforeach
 </table>

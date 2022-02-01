@@ -14,7 +14,7 @@ class EdittitleController extends Controller
      */
     public function index()
     {
-        $areas = Area::all();
+        $areas = Area::orderBy('list', 'asc')->get();
         return view('edittitle.index', compact('areas'));
     }
 
@@ -50,15 +50,7 @@ class EdittitleController extends Controller
      */
     public function show(Request $request, $id)
     {
-        // if ($request) {
-        //     $change = $request + 1;
-        //     $update = [
-        //         'list' => $change->list,
-        //     ];
-        //     Area::where('id', $id)->list($update);
-        //     $areas = Area::orderBy('list')->get();
-        //     return view('edittitle.index', compact('areas'));
-        // }
+        // 
     }
 
     /**
@@ -101,39 +93,12 @@ class EdittitleController extends Controller
         return redirect()->route('edittitle.index')->with('success', '削除完了しました');
     }
 
-    // public function list(Request $request)
-    // {
-
-    // }
+    public function list(Request $request)
+    {
+        $update = [
+            'list' => $request->list,
+        ];
+        Area::where('id', $request->id)->update($update);
+        return redirect()->route('edittitle.index')->with('success', '移動完了しました');
+    }
 }
-
-        // $sort = $request->get('sort');
-        // $move = $request->get('move');
-        // if ($sort) {
-        //     if ($sort === '1') {
-        //         $areas = Area::orderBy('created_at')->get();
-        //     } elseif ($sort === '2') {
-        //         $areas = Area::orderBy('created_at', 'DESC')->get();
-        //     } elseif ($sort === '3') {
-        //         $areas = Area::orderBy('area')->get();
-        //     } elseif ($sort === '4') {
-        //         $areas = Area::orderBy('area', 'DESC')->get();
-        //     }
-
-        // } 
-
-        // if ($move) {
-        //     $change = $move + 1;
-        //     $update = [
-        //         'list' => $change->list,
-        //     ];
-        //     Area::where('id', $id)->update($update);
-            
-        //     $areas = Area::orderBy('list')->get();
-        // } 
-        // else {
-        //     $areas = Area::all();
-        
-        // }
-
-        // return view('edittitle.index', compact('areas'));

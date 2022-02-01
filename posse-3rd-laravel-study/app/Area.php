@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Area extends Model
 {
     protected $fillable = [
-        'area'
+        'area',
+        'list'
     ];
 
     public function questions()

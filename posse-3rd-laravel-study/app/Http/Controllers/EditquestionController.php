@@ -14,7 +14,7 @@ class EditquestionController extends Controller
      */
     public function index($area_id)
     {
-        $questions = Question::where('area_id', $area_id)->get();
+        $questions = Question::where('area_id', $area_id)->orderBy('list', 'asc')->get();
         $area_id = $area_id;
         return view('editquestion.index', compact('questions', 'area_id'));
     }
@@ -98,5 +98,14 @@ class EditquestionController extends Controller
         $area_id = $request->area_id;
         Question::where('id', $id)->delete();
         return redirect()->route('editquestion_index', $area_id)->with('success', '削除完了しました');
+    }
+
+    public function list(Request $request)
+    {
+        $update = [
+            'list' => $request->list,
+        ];
+        Question::where('id', $request->id)->update($update);
+        return redirect()->route('editquestion_index', $request->area_id)->with('success', '移動完了しました');
     }
 }
