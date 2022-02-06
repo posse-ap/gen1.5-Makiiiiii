@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\CHoice;
+use App\Choice;
+use App\Question;
 
 class EditchoiceController extends Controller
 {

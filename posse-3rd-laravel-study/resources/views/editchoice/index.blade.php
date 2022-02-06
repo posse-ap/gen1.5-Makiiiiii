@@ -4,13 +4,14 @@
 <p>{{ $message }}</p>
 @endif
 
+
 <h2>新規追加</h2>
 <form action="{{ route('editchoice_store', $question_id) }}" method="POST">
     @csrf
     <input type="hidden" name="question_id" value={{ $question_id }}>
     <p>選択肢番号：<input type="number" name="choice_id"></p>
     <p>選択肢：<input type="text" name="name" value="{{old('name')}}"></p>
-
+    
     <input type="submit" value="登録する">
 </form>
 
@@ -39,6 +40,6 @@
             </form>
         </th>
     </tr>
-    
+    {{-- <a href="{{ route('editquestion_index', $choice->questions->area_id) }}">タイトル編集画面へ</a> --}}
     @endforeach
 </table>
