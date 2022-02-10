@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-use Illuminate\Http\Request;
-
 class LoginController extends Controller
 {
     /*
@@ -23,15 +21,12 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    protected $maxAttempts = 4;     // ログイン試行回数（回）
-    protected $decayMinutes = 3;   // ログインロックタイム（分）
-
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/quiz/1';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -41,10 +36,5 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-    }
-
-    public function username()
-    {
-        return 'userid';
     }
 }
