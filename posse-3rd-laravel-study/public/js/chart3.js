@@ -1,21 +1,11 @@
 // 学習コンテンツドーナツチャート
-var language = document.getElementById("contents");
 var contentsChart= new Chart(contents, {
     type: 'doughnut',
     data: {
-        labels: ["N予備校", "ドットインストール", "課題"], //データ項目のラベル
+        labels: contentNameArray, //データ項目のラベル
         datasets: [{
-            backgroundColor: [
-                "#0445EC",
-                "#0D72BD",
-                "#1EBEDE",
-                "#3CCEFE",
-                "#B29EF3",
-                "#6D46EC",
-                "#6D46EC",
-                "#4A17EF"
-            ],
-            data: [40, 20, 40] //グラフのデータ
+            backgroundColor: contentColorArray,
+            data: contentData//グラフのデータ
         }]
     },
     options: {

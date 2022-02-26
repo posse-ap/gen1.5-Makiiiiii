@@ -11,17 +11,17 @@
                 <div class="display d-flex justify-content-between mb-3">
                     <div class="display__time bg-white p-3 shadow-sm">
                         <p class="display__time__when">Today</p>
-                        <p class="display__time__number">3</p>
+                        <p class="display__time__number">{{ $todayStudylogs->sum("study_time") }}</p>
                         <p class="display__time__unit">hour</p>
                     </div>
                     <div class="display__time bg-white mx-3 p-3 shadow-sm">
                         <p class="display__time__when">Month</p>
-                        <p class="display__time__number">120</p>
+                        <p class="display__time__number">{{ $thismonthStudylogs->sum("study_time") }}</p>
                         <p class="display__time__unit">hour</p>
                     </div>
                     <div class="display__time bg-white p-3 shadow-sm">
                         <p class="display__time__when">Total</p>
-                        <p class="display__time__number">1348</p>
+                        <p class="display__time__number">{{ $totalStudylogs->sum("study_time") }}</p>
                         <p class="display__time__unit">hour</p>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
     <div id="tweet-area" class="bg-danger"></div>
     <div class="d-flex font-weight-bold justify-content-center">
         <p class="previous">＜</p>
-        <p class="mx-3">2020年10月</p>
+        <p class="mx-3">2022年02月</p>
         <p class="following">＞</p>
     </div>
     <button type="button" class="btn btn-primary footer__record d-md-none px-5 py-2 my-4 shadow-sm" data-toggle="modal" data-target="#recordRegistrationModalCenter">
@@ -80,158 +80,75 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="modalReplace" class="row pt-0">
-                    <div class="col-12 col-md-6">
-                        <div>
-                            <label for="studyDate">学習日</label>
-                            <input class="flatpickr studyInput" type="text" id="studyDate" name="date">
+                <form action="{{ route('webapp_store') }}" method="POST">
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                    @csrf
+                    <div id="modalReplace" class="row pt-0">
+                        <div class="col-12 col-md-6">
+                            <div>
+                                <label for="studyDate">学習日</label>
+                                <input class="flatpickr studyInput" type="text" id="studyDate" name="date">
+                            </div>
+                            <div class="mt-4">
+                                <label for="">学習コンテンツ（複数選択可）</label>
+                                <ul class="contents pl-0">
+                                    @foreach ($contents as $content)
+                                        <li onclick="check('contents{{ $content->id }}')">
+                                            <label class="contents__label py-1 px-3 d-flex align-items-center">
+                                                <input type="checkbox" class="contents__label__input m-0" id="contents{{ $content->id }}" name="content_id" value="{{ $content->id }}">
+                                                <span class="contents__label__dummy">
+                                                </span>
+                                                <span class="contents__label__text d-block">
+                                                    {{ $content->name }}
+                                                </span>
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="mt-4">
+                                <label for="">学習言語（複数選択可）</label>
+                                <ul class="contents pl-0">
+                                    @foreach ($languages as $language)
+                                        <li onclick="check('language{{ $language->id }}')">
+                                            <label class="contents__label py-1 px-3 d-flex align-items-center">
+                                                <input type="checkbox" class="contents__label__input m-0" id="language{{ $language->id }}" name="language_id" value="{{ $language->id }}">
+                                                <span class="contents__label__dummy">
+                                                </span>
+                                                <span class="contents__label__text d-block">
+                                                    {{ $language->name }}
+                                                </span>
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
-                        <div class="mt-4">
-                            <label for="">学習コンテンツ（複数選択可）</label>
-                            <ul class="contents pl-0">
-                                <li onclick="check('contents1')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center">
-                                        <input type="checkbox" class="contents__label__input m-0" id="contents1">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            N予備校
-                                        </span>
-                                    </label>
-                                </li>
-                                <li onclick="check('contents2')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center">
-                                        <input type="checkbox" class="contents__label__input m-0" id="contents2">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            ドットインストール
-                                        </span>
-                                    </label>
-                                </li>
-                                <li onclick="check('contents3')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center">
-                                        <input type="checkbox" class="contents__label__input m-0" id="contents3">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            POSSE課題
-                                        </span>
-                                    </label>
-                                </li>
-                            </ul>
+                        <div class="col-12 col-md-6">
+                            <div class="mt-2 mt-md-0">
+                                <label for="studyHour">学習時間</label>
+                                <input type="text" id="studyHour" name="study_time" class="studyInput">
+                            </div>
+                            <div class="mt-4">
+                                <label for="comment">Twitter用コメント</label>
+                                <textarea id="comment" name="comment" class="studyInputTextarea"></textarea>
+                            </div>
+                            <div class="mt-4">
+                                <label class="contents__label py-1 d-flex align-items-center bg-white">
+                                    <input class="contents__label__input m-0" type="checkbox" id="twitterCheck">
+                                    <span class="contents__label__dummy">
+                                    </span>
+                                    <span class="contents__label__text d-block ml-1">
+                                        Twitterにシェアする
+                                    </span>
+                                </label>
+                            </div>
                         </div>
-                        <div class="mt-4">
-                            <label for="">学習言語（複数選択可）</label>
-                            <ul class="contents pl-0">
-                                <li onclick="check('language1')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center" onclick="check('language1')">
-                                        <input type="checkbox" class="contents__label__input m-0" id="language1">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            HTML
-                                        </span>
-                                    </label>
-                                </li>
-                                <li onclick="check('language2')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center" onclick="check('language2')">
-                                        <input type="checkbox" class="contents__label__input m-0" id="language2">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            CSS
-                                        </span>
-                                    </label>
-                                </li>
-                                <li onclick="check('language3')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center" onclick="check('language3')">
-                                        <input type="checkbox" class="contents__label__input m-0" id="language3">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            JavaScript
-                                        </span>
-                                    </label>
-                                </li>
-                                <li onclick="check('language4')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center" onclick="check('language4')">
-                                        <input type="checkbox" class="contents__label__input m-0" id="language4">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            PHP
-                                        </span>
-                                    </label>
-                                </li>
-                                <li onclick="check('language5')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center" onclick="check('language5')">
-                                        <input type="checkbox" class="contents__label__input m-0" id="language5">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            Laravel
-                                        </span>
-                                    </label>
-                                </li>
-                                <li onclick="check('language6')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center" onclick="check('language6')">
-                                        <input type="checkbox" class="contents__label__input m-0" id="language6">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            SQL
-                                        </span>
-                                    </label>
-                                </li>
-                                <li onclick="check('language7')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center" onclick="check('language7')">
-                                        <input type="checkbox" class="contents__label__input m-0" id="language7">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            SHELL
-                                        </span>
-                                    </label>
-                                </li>
-                                <li onclick="check('language8')">
-                                    <label class="contents__label py-1 px-3 d-flex align-items-center" onclick="check('language8')">
-                                        <input type="checkbox" class="contents__label__input m-0" id="language8">
-                                        <span class="contents__label__dummy">
-                                        </span>
-                                        <span class="contents__label__text d-block">
-                                            情報システム基礎知識（その他）
-                                        </span>
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
+                        <button type="submit" class="btn btn-primary record cpl-12 col-md-6 px-5 py-2 mx-auto my-4 shadow-sm" data-toggle="modal" data-target="#postModalCenter" onclick="gotoAwesome()">
+                            <p class="text-white mb-0 mx-5">記録・投稿</p>
+                        </button>
                     </div>
-
-                    <div class="col-12 col-md-6">
-                        <div class="mt-2 mt-md-0">
-                            <label for="studyHour">学習時間</label>
-                            <input type="text" id="studyHour" name="hour" class="studyInput">
-                        </div>
-                        <div class="mt-4">
-                            <label for="comment">Twitter用コメント</label>
-                            <textarea id="comment" name="comment" class="studyInputTextarea"></textarea>
-                        </div>
-                        <div class="mt-4">
-                            <label class="contents__label py-1 d-flex align-items-center bg-white">
-                                <input class="contents__label__input m-0" type="checkbox" id="twitterCheck">
-                                <span class="contents__label__dummy">
-                                </span>
-                                <span class="contents__label__text d-block ml-1">
-                                    Twitterにシェアする
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-primary record cpl-12 col-md-6 px-5 py-2 mx-auto my-4 shadow-sm" data-toggle="modal" data-target="#postModalCenter" onclick="gotoAwesome()">
-                        <p class="text-white mb-0 mx-5">記録・投稿</p>
-                    </button>
-                </div>
+                </form>
 
                 <!-- ローディング画面 -->
                 <div class="h-100">
@@ -253,5 +170,93 @@
         </div>
     </div>
 </div>
+
+<script>
+// 棒グラフ　縦軸・横軸のデータ作成
+// var thismonthStudylogs = @json($thismonthStudylogs);
+// var lastdate = @json($lastdate);
+
+let timeArray = [];
+let dateArray = [];
+let counter = 0;
+
+@for ($i = 1; $i <= $lastdate; $i++)
+    @foreach ($thismonthStudylogs as $studylog)
+        @if ($studylog->date->format('d') == $i)
+            timeArray.push({{ $studylog->study_time }});
+        @else
+            ++counter;
+        @endif
+
+        @if ($loop->last)
+            if (counter == {{ $thismonthStudylogs->count() }}) {
+                timeArray.push(0);
+            };
+            counter = 0;
+        @endif
+    @endforeach
+
+    dateArray.push({{ $i }});
+@endfor
+
+// 学習言語グラフ　言語名・色と学習時間
+let languageNameArray = [];
+let languageColorArray = [];
+
+@foreach ($languages as $language)
+    languageNameArray.push('{{ $language->name }}');
+    languageColorArray.push('{{ $language->color }}');
+@endforeach
+
+let languageData = [];
+let languageCounter = 0;
+
+@for ($i = 1; $i <= $languages->count(); $i++)
+    @foreach ($thismonthLanguages as $thismonthLanguage)
+        @if ($thismonthLanguage->language_id == $i)
+            languageData.push({{ $thismonthLanguage->study_time }});
+        @else
+            ++languageCounter;
+        @endif
+
+        @if ($loop->last)
+            if (languageCounter == {{ $thismonthLanguages->count() }}) {
+                languageData.push(0);
+            };
+            languageCounter = 0;
+        @endif
+    @endforeach
+@endfor
+
+// 学習コンテンツグラフ　コンテンツ名・色と学習時間
+let contentNameArray = [];
+let contentColorArray = [];
+
+@foreach ($contents as $content)
+    contentNameArray.push('{{ $content->name }}');
+    contentColorArray.push('{{ $content->color }}');
+@endforeach
+
+let contentData = [];
+let contentCounter = 0;
+
+@for ($i = 1; $i <= $contents->count(); $i++)
+    @foreach ($thismonthContents as $thismonthContent)
+        @if ($thismonthContent->content_id == $i)
+            contentData.push({{ $thismonthContent->study_time }});
+        @else
+            ++contentCounter;
+        @endif
+
+        @if ($loop->last)
+            if (contentCounter == {{ $thismonthContents->count() }}) {
+                contentData.push(0);
+            };
+            contentCounter = 0;
+        @endif
+    @endforeach
+@endfor
+
+</script>
 
 @endsection

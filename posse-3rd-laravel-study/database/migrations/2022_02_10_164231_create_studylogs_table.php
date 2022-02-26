@@ -20,7 +20,7 @@ class CreateStudylogsTable extends Migration
             $table->integer('content_id');
             $table->integer('language_id');
             $table->integer('study_time');
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

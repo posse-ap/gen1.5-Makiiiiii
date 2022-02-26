@@ -15,4 +15,17 @@ class Studylog extends Model
     {
         return $this->hasOne('App\Model\Language');
     }
+
+    protected $dates = [
+        'date'
+    ];
+
+    protected $fillable = [
+        'user_id',
+        'date',
+        'content_id',
+        'language_id',
+        'study_time',
+        'comment',
+    ];
 }
