@@ -17,8 +17,6 @@ class CreateStudylogsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->date('date');
-            $table->integer('content_id');
-            $table->integer('language_id');
             $table->integer('study_time');
             $table->string('comment')->nullable();
             $table->timestamps();

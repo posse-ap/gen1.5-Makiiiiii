@@ -34,23 +34,18 @@
                     <p class="font-weight-bold">学習言語</p>
                     <canvas id="language" class="my-4"></canvas>
                     <ul class="label pl-0">
-                        <li> JavaScript</li>
-                        <li>CSS</li>
-                        <li>PHP</li>
-                        <li>HTML</li>
-                        <li>Laravel</li>
-                        <li>SQL</li>
-                        <li>SHELL</li>
-                        <li>情報処理システム基礎知識（その他）</li>
+                        @foreach ($languages as $language)
+                            <li>{{ $language->name }}</li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="donut graph bg-white p-3 p-lg-4 shadow-sm">
                     <p class="font-weight-bold">学習コンテンツ</p>
                     <canvas id="contents" class="my-4"></canvas>
                     <ul class="label pl-0">
-                        <li>N予備校</li>
-                        <li>ドットインストール</li>
-                        <li>課題</li>
+                        @foreach ($contents as $content)
+                            <li>{{ $content->name }}</li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -172,7 +167,7 @@
 </div>
 
 <script>
-// 棒グラフ　縦軸・横軸のデータ作成
+// 棒グラフ 縦軸・横軸のデータ作成
 // var thismonthStudylogs = @json($thismonthStudylogs);
 // var lastdate = @json($lastdate);
 
@@ -199,7 +194,7 @@ let counter = 0;
     dateArray.push({{ $i }});
 @endfor
 
-// 学習言語グラフ　言語名・色と学習時間
+// 学習言語グラフ 言語名・色と学習時間
 let languageNameArray = [];
 let languageColorArray = [];
 
@@ -228,7 +223,7 @@ let languageCounter = 0;
     @endforeach
 @endfor
 
-// 学習コンテンツグラフ　コンテンツ名・色と学習時間
+// 学習コンテンツグラフ コンテンツ名・色と学習時間
 let contentNameArray = [];
 let contentColorArray = [];
 

@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             StudylogsTableSeeder::class,
             ContentsTableSeeder::class,
             LanguagesTableSeeder::class,
+            ContentStudylogsTableSeeder::class,
+            LanguageStudylogsTableSeeder::class,
         ]);
     }
 }

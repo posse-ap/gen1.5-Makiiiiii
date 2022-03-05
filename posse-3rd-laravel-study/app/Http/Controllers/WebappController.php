@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Studylog;
+use App\Model\LanguageStudylog;
+use App\Model\ContentStudylog;
 use App\Model\Language;
 use App\Model\Content;
 use Carbon\Carbon;
@@ -30,16 +32,17 @@ class WebappController extends Controller
         
         // 学習言語のグラフ
         $languages = Language::all();
-        $thismonthLanguages = Studylog::whereBetween('date', [$dt_from, $dt_to])->selectRaw('SUM(study_time) AS study_time, language_id')->orderBy('language_id')->groupBy('language_id')->get();
+        $thismonthLanguages = LanguageStudylog::whereBetween('date', [$dt_from, $dt_to])
+        ->selectRaw('SUM(study_time) AS study_time, language_id')
+        ->orderBy('language_id')
+        ->groupBy('language_id')->get();
         
-        // 学習言語のグラフ
+        // 学習コンテンツのグラフ
         $contents = Content::all();
-        $thismonthContents = Studylog::whereBetween('date', [$dt_from, $dt_to])->selectRaw('SUM(study_time) AS study_time, content_id')->orderBy('content_id')->groupBy('content_id')->get();
+        $thismonthContents = ContentStudylog::whereBetween('date', [$dt_from, $dt_to])->selectRaw('SUM(study_time) AS study_time, content_id')->orderBy('content_id')->groupBy('content_id')->get();
 
-        // dd($thismonthLanguages);
         return view('webapp.index', compact('todayStudylogs', 'thismonthStudylogs', 'totalStudylogs', 'lastdate', 'languages', 'thismonthLanguages', 'contents', 'thismonthContents', 'user'));
     }
-
 
     /**
      * Store a newly created resource in storage.
