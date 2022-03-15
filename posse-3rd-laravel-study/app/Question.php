@@ -14,5 +14,6 @@ class Question extends Model
     protected $fillable = [
         'area_id',
         'image_path',
+        'list',
     ];
 }

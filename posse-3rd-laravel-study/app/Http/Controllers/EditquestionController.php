@@ -37,10 +37,20 @@ class EditquestionController extends Controller
      */
     public function store(Request $request, $area_id)
     {
-        $form = $request->all();
+        // ファイルアップロード
+        $file_name = $request->file('image_path')->getClientOriginalName();
+        $request->file('image_path')->storeAs('public', $file_name);
+
+        // エリアID取得
         $area_id = $request->area_id;
-        unset($form['_token']);
-        Question::create($form);
+
+        // Question への保存
+        $question = new  Question();
+        $question->list = $request->list;
+        $question->area_id = $request->area_id;
+        $question->image_path = asset("storage/$file_name");
+        $question->save();
+        
         return redirect()->route('editquestion_index',['area_id'=>$area_id])->with('success', '新規登録完了しました');
     }
 

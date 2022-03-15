@@ -7,10 +7,11 @@
 <a href="{{ route('edittitle.index')}}">タイトル編集画面へ</a>
 
 <h2>新規追加</h2>
-<form action="{{ route('editquestion_store', $area_id) }}" method="POST">
+<form action="{{ route('editquestion_store', $area_id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="area_id" value={{$area_id}}>
-    <p>設問画像：<input type="text" name="image_path" value="{{ old('image_path') }}"></p>
+    {{-- <p>設問画像：<input type="text" name="image_path" value="{{ old('image_path') }}"></p> --}}
+    <p>設問画像：<input type="file" id="file" name="image_path" class="form-control"></p>
     <p>順番：<input type="number" name="list" value="{{ old('list') }}"></p>
     <input type="submit" value="登録する">
 </form>
@@ -28,7 +29,7 @@
     <tr>
         <td>
             <a href="{{ route('editchoice_index', ['question_id'=>$question->id]) }}">
-                <image src="{{ $question->image_path }}" class="w-25"></image>
+                <img src="{{ $question->image_path }}" class="w-25">
             </a>
             {{ $question->image_path }}
             {{ $question->list }}
@@ -66,4 +67,5 @@
         </th>
     </tr>
     @endforeach
+    {{-- <img src="{{ asset('storage/スクリーンショット 2022-01-29 14.22.02.png') }}" width="100" height="100"> --}}
 </table>
