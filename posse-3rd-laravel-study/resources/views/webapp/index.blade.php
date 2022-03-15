@@ -32,7 +32,9 @@
             <div class="col-12 col-md-6 d-flex justify-content-between">
                 <div class="donut graph bg-white p-3 p-lg-4 mr-3 shadow-sm">
                     <p class="font-weight-bold">学習言語</p>
-                    <canvas id="language" class="my-4"></canvas>
+                    <div class="w-75 mx-auto my-3">
+                        <canvas id="language"></canvas>
+                    </div>
                     <ul class="label pl-0">
                         @foreach ($languages as $language)
                             <li>{{ $language->name }}</li>
@@ -41,7 +43,9 @@
                 </div>
                 <div class="donut graph bg-white p-3 p-lg-4 shadow-sm">
                     <p class="font-weight-bold">学習コンテンツ</p>
-                    <canvas id="contents" class="my-4"></canvas>
+                    <div class="w-75 mx-auto my-3">
+                        <canvas id="contents"></canvas>
+                    </div>
                     <ul class="label pl-0">
                         @foreach ($contents as $content)
                             <li>{{ $content->name }}</li>
@@ -57,7 +61,7 @@
     <div id="tweet-area" class="bg-danger"></div>
     <div class="d-flex font-weight-bold justify-content-center">
         <p class="previous">＜</p>
-        <p class="mx-3">2022年02月</p>
+        <p class="mx-3">{{ $thisMonth }}</p>
         <p class="following">＞</p>
     </div>
     <button type="button" class="btn btn-primary footer__record d-md-none px-5 py-2 my-4 shadow-sm" data-toggle="modal" data-target="#recordRegistrationModalCenter">
@@ -75,9 +79,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('webapp_store') }}" method="POST">
+                {{-- <form action="{{ route('webapp_store') }}" method="POST">
                     <input type="hidden" name="user_id" value="{{ $user->id }}">
-                    @csrf
+                    @csrf --}}
                     <div id="modalReplace" class="row pt-0">
                         <div class="col-12 col-md-6">
                             <div>
@@ -143,7 +147,7 @@
                             <p class="text-white mb-0 mx-5">記録・投稿</p>
                         </button>
                     </div>
-                </form>
+                {{-- </form> --}}
 
                 <!-- ローディング画面 -->
                 <div class="h-100">

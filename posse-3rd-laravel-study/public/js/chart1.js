@@ -1,47 +1,49 @@
 // 棒グラフ
-var ctx = document.getElementById('barGraph');
+var img = new Image();
+img.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjUqqmOhoWxIfBnhEao_Qrq0rxVGphAarvbfPMWRw4y2NgxRd1ULVZi5pabDulps5WYXc&usqp=CAU';
+img.onload = function() {
 
-var data = {
-    labels: dateArray,
-    datasets: [{
-        data: timeArray,
-        backgroundColor: '#39CAFB',
-        borderRadius: 15,
-    }],
-};
+    var ctx = document.getElementById('barGraph').getContext('2d');
+    var fillPattern = ctx.createPattern(img, 'repeat');
 
-var options = {
-    scales: {
-        yAxes: [{
-            ticks: {
-                callback: function(value, index, values) {
-                    return value + 'h'
-                }
-
-            },
-            drawBorder: false,
-            gridLines: {
-                display: false,
-                drawBorder: false,
-            }
+    var data = {
+        labels: dateArray,
+        datasets: [{
+            data: timeArray,
+            backgroundColor: fillPattern,
+            borderRadius: 15,
         }],
-        yAxes: [{
-            gridLines: {
-                drawBorder: false,
-                display: false,
+    };
+    
+    var options = {
+        scales: {
+            y: {
+                ticks: {
+                    callback: function(value, index, values) {
+                        return value + 'h'
+                    },
+                },
+                grid: {
+                    display: false,
+                    drawBorder: false,
+                }
+                
             },
-            ticks: {
-                min: 0, 
+            x: {
+                grid: {
+                    display: false,
+                    drawBorder: false,
+                }
             }
-        }]
-    },
-    plugins: {
-        legend: false
-    }
+        },
+        plugins: {
+            legend: false
+        }
+    };
+    
+    var ex_chart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: options
+    });
 };
-
-var ex_chart = new Chart(ctx, {
-    type: 'bar',
-    data: data,
-    options: options
-});
