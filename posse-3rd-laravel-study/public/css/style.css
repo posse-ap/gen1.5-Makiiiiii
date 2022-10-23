@@ -11,6 +11,10 @@ p {
     margin-bottom: 0;
 }
 
+.is-hide{
+    display:none; 
+}
+
 @media (max-width: 767px) {
     body {
     font-size: 12px;
@@ -393,8 +397,9 @@ AWESOME
 ERROR
 ============================================= */
 .error {
+    display: none;
     text-align: center;
-    margin-top: 150px;
+    margin: 150px auto;
 }
 
 .error__sentence {

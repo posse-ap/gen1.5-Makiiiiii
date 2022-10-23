@@ -61,21 +61,31 @@ class WebappController extends Controller
      */
     public function store(Request $request)
     {
-        // $studylog = new Studylog();
-        // $studylog->user_id = $request->user_id;
-        // $studylog->date = $request->date;
-        // $studylog->study_time = $request->study_time;
-        // $studylog->save;
+        $studylog = new Studylog();
+        $studylog->user_id = $request->user_id;
+        $studylog->date = $request->date;
+        $studylog->study_time = $request->study_time;
+        $studylog->comment = $request->comment;
+        $studylog->save();
 
-        // $languageStudylog = new LanguageStudylog();
-        // $languageStudylog->user_id = $request->user_id;
-        // $languageStudylog->date = $request->date;
-        // $languageStudylog->language_id = $request->language_id;
-        // $languageStudylog->studylog_id = $request->studylog_id;
-        // $languageStudylog->user_id = $request->study_time;
-        // $languageStudylog->save;
+        foreach($request->language_ids as $language_id) {
+            $languageStudylog = new LanguageStudylog();
+            $languageStudylog->user_id = $request->user_id;
+            $languageStudylog->date = $request->date;
+            $languageStudylog->language_id = $language_id;
+            $languageStudylog->study_time = $request->study_time/count($request->language_ids);
+            $languageStudylog->studylog_id = $studylog->id;
+            $languageStudylog->save();
+        }
 
-
-        return redirect()->route('webapp_index');
+        foreach($request->content_ids as $content_id) {
+            $contentStudylog = new ContentStudylog();
+            $contentStudylog->user_id = $request->user_id;
+            $contentStudylog->date = $request->date;
+            $contentStudylog->content_id = $content_id;
+            $contentStudylog->study_time = $request->study_time/count($request->content_ids);
+            $contentStudylog->studylog_id = $studylog->id;
+            $contentStudylog->save();
+        }
     }
 }

@@ -9,35 +9,17 @@ function check(contentID) {
         }
 };
 
-// awesome画面遷移
-let timer = null;
-let modalReplace = document.getElementById('modalReplace');
-let loader = document.getElementById('loader');
-let awesome = document.getElementById('awesome');
-
-function gotoAwesome() {
-    let twitterCheck = document.getElementById('twitterCheck');
-    if (twitterCheck.checked) {
-        tweet();
-    }
-
-    modalReplace.style.display="none";
-    loader.style.display="block";
-
-    timer = setTimeout(countUp, 1000);
-
-}
-
-function countUp() {
-    loader.style.display="none";
-    awesome.style.display="block";
-} 
-
 // モーダルを閉じた時
 $('#recordRegistrationModalCenter').on('hidden.bs.modal', function () {
-    modalReplace.style.display="flex";
-    loader.style.display="none";
-    awesome.style.display="none";
+    var $modalReplace = $("#modalReplace");
+    var $loader = $("#loader");
+    var $awesome = $("#awesome");
+    var $error = $("#error");
+
+    $modalReplace.css("display", "flex");
+    $loader.css("display", "none");
+    $awesome.css("display", "none");
+    $error.css("display", "none");
 })
 
 // ツイート関数
