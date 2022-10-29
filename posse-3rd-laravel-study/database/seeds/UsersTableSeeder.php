@@ -18,6 +18,12 @@ class UsersTableSeeder extends Seeder
             ['name' => "maki",
             'email' => "test@com",
             'password' => bcrypt('password'),
+            'is_admin' => true,
+            ],
+            ['name' => "user2",
+            'email' => "test2@com",
+            'password' => bcrypt('password'),
+            'is_admin' => false,
             ],
         ]);
     }

@@ -6,7 +6,7 @@
     <section class="bg-light py-4">
         <div class="container">
             <div class="mx-auto m-5">
-                <div class="">
+                <div>
                     <div class="pt-2">
                         <p class="h3 border-bottom border-secondary pb-3">プロフィール編集</p>
                     </div>

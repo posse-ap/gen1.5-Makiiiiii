@@ -37,8 +37,12 @@ HEADER
 }
 
 .record {
-    background: -webkit-gradient(linear, left top, right top, color-stop(35%, #4780eb), to(#00d4ff));
     background: linear-gradient(90deg, #4780eb 35%, #00d4ff 100%);
+    border-radius: 20px;
+}
+
+.admin {
+    background: linear-gradient(90deg, #ffd61e 35%, #ffea8d 100%);
     border-radius: 20px;
 }
 
@@ -87,7 +91,7 @@ TOP画面
     line-height: 30px;
 }
 
-.label li:before {
+.label span {
     border-radius: 50%;
     width: 10px;
     height: 10px;
@@ -96,38 +100,6 @@ TOP画面
     left: 0;
     top: 0.3em;
     content: "";
-}
-
-.label li:nth-child(1):before {
-    background: #0445EC;
-}
-
-.label li:nth-child(2):before {
-    background: #0D72BD;
-}
-
-.label li:nth-child(3):before {
-    background: #1EBEDE;
-}
-
-.label li:nth-child(4):before {
-    background: #3CCEFE;
-}
-
-.label li:nth-child(5):before {
-    background: #B29EF3;
-}
-
-.label li:nth-child(6):before {
-    background: #6D46EC;
-}
-
-.label li:nth-child(7):before {
-    background: #6D46EC;
-}
-
-.label li:nth-child(8):before {
-    background: #4A17EF;
 }
 
 /* =============================================

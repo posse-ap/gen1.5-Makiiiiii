@@ -3,8 +3,11 @@
 @include('layout.header')
 
 @section('content')
-    <section class="bg-light py-4">
-        <div class="container">
+<section class="bg-light py-4">
+    <div class="container">
+            @if ($message = Session::get('info'))
+                <p>{{ $message }}</p>
+            @endif
             <div class="row">
                 <div class="col-12 col-md-6 mb-3 mb-md-0">
                     <div class="display d-flex justify-content-between mb-3">
@@ -36,7 +39,7 @@
                         </div>
                         <ul class="label pl-0">
                             @foreach ($languages as $language)
-                                <li>{{ $language->name }}</li>
+                                <li><span style="background-color:{{ $language->color }}"></span>{{ $language->name }}</li>
                             @endforeach
                         </ul>
                     </div>
@@ -47,7 +50,7 @@
                         </div>
                         <ul class="label pl-0">
                             @foreach ($contents as $content)
-                                <li>{{ $content->name }}</li>
+                                <li><span style="background-color:{{ $content->color }}"></span>{{ $content->name }}</li>
                             @endforeach
                         </ul>
                     </div>
