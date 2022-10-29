@@ -6,18 +6,19 @@ volumes:
 
 services:
   mysql:
-    build:
-      context: ./db
-    ports:
-      - 3306:3306
-    volumes:
-      - ./db/var/lib/mysql:/var/lib/mysql
+    platform: linux/amd64
+    image: mysql:8.0
     environment:
       - MYSQL_DATABASE=laravel
       - MYSQL_USER=laravel
       - MYSQL_PASSWORD=password
       - MYSQL_ROOT_PASSWORD=password
-    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    volumes:
+      - ./container/db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./container/db/etc/mysql/conf.d:/etc/mysql/conf.d
+      - ./container/db/data:/var/lib/mysql
   phpfpm:
     build:
       context: ./app
