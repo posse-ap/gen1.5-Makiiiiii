@@ -95,16 +95,16 @@
                                 <div class="mt-4">
                                     <label for="">学習コンテンツ（複数選択可）</label>
                                     <ul class="contents pl-0">
-                                        @foreach ($contents as $content)
-                                            <li onclick="check('contents{{ $content->id }}')">
+                                        @foreach ($real_contents as $real_content)
+                                            <li onclick="check('contents{{ $real_content->id }}')">
                                                 <label class="contents__label py-1 px-3 d-flex align-items-center">
                                                     <input type="checkbox" class="contents__label__input m-0"
-                                                        id="contents{{ $content->id }}" name="content_id"
-                                                        value="{{ $content->id }}">
+                                                        id="contents{{ $real_content->id }}" name="content_id"
+                                                        value="{{ $real_content->id }}">
                                                     <span class="contents__label__dummy">
                                                     </span>
                                                     <span class="contents__label__text d-block">
-                                                        {{ $content->name }}
+                                                        {{ $real_content->name }}
                                                     </span>
                                                 </label>
                                             </li>
@@ -114,16 +114,16 @@
                                 <div class="mt-4">
                                     <label for="">学習言語（複数選択可）</label>
                                     <ul class="contents pl-0">
-                                        @foreach ($languages as $language)
-                                            <li onclick="check('language{{ $language->id }}')">
+                                        @foreach ($real_languages as $real_language)
+                                            <li onclick="check('language{{ $real_language->id }}')">
                                                 <label class="contents__label py-1 px-3 d-flex align-items-center">
                                                     <input type="checkbox" class="contents__label__input m-0"
-                                                        id="language{{ $language->id }}" name="language_id"
-                                                        value="{{ $language->id }}">
+                                                        id="language{{ $real_language->id }}" name="language_id"
+                                                        value="{{ $real_language->id }}">
                                                     <span class="contents__label__dummy">
                                                     </span>
                                                     <span class="contents__label__text d-block">
-                                                        {{ $language->name }}
+                                                        {{ $real_language->name }}
                                                     </span>
                                                 </label>
                                             </li>

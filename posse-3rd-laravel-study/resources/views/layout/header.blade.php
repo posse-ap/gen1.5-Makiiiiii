@@ -12,6 +12,9 @@
                 </p>
             </div>
             <div class="w-min d-flex">
+                <a href="{{ route('news') }}" class="btn news d-none d-md-block px-5 py-2 shadow-sm mr-3">
+                    <p class="text-white mb-0">News</p>
+                </a>
                 @if ($user->is_admin == true)
                     <a href="{{ route('admin_index') }}" class="btn admin d-none d-md-block px-5 py-2 shadow-sm mr-3">
                         <p class="text-white mb-0">管理者画面</p>

@@ -391,3 +391,21 @@ ERROR
     font-size: 50px;
     margin: 0;
 }
+
+/* =============================================
+News
+============================================= */
+
+.news {
+    background: linear-gradient(90deg, #ff8b1e 35%, #ffd18d 100%);
+    border-radius: 20px;
+}
+
+.top__back {
+    background-image: url("https://blog.posse-ap.com/wp-content/plugins/snow-monkey-blocks/dist/img/photos/line_52269528648064.jpg");
+}
+
+.thumbnail {
+        height: 500px;
+        object-fit: cover;
+}

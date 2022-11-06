@@ -36,7 +36,7 @@ class WebappController extends Controller
             ->get();
 
         // 学習言語のグラフ
-        $languages = Language::all();
+        $languages = Language::withTrashed()->get();
         $thismonthLanguages = LanguageStudylog::whereBetween('date', [$dt_from, $dt_to])
             ->selectRaw('SUM(study_time) AS study_time, language_id')
             ->orderBy('language_id')
@@ -44,14 +44,18 @@ class WebappController extends Controller
             ->get();
 
         // 学習コンテンツのグラフ
-        $contents = Content::all();
+        $contents = Content::withTrashed()->get();
         $thismonthContents = ContentStudylog::whereBetween('date', [$dt_from, $dt_to])
             ->selectRaw('SUM(study_time) AS study_time, content_id')
             ->orderBy('content_id')
             ->groupBy('content_id')
             ->get();
 
-        return view('webapp.index', compact('todayStudylogs', 'thismonthStudylogs', 'totalStudylogs', 'lastdate', 'languages', 'thismonthLanguages', 'contents', 'thismonthContents', 'user', 'thisMonth'));
+        // モーダル用
+        $real_languages = Language::all();
+        $real_contents = Content::all();
+
+        return view('webapp.index', compact('todayStudylogs', 'thismonthStudylogs', 'totalStudylogs', 'lastdate', 'languages', 'thismonthLanguages', 'contents', 'thismonthContents', 'user', 'thisMonth', 'real_languages', 'real_contents'));
     }
 
     /**

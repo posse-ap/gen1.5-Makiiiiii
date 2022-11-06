@@ -40,6 +40,10 @@ Route::post('/admin/content/destroy', 'AdminController@content_destroy')->name('
 Route::get('/admin/user', 'AdminController@user_index')->name('admin_user_index')->middleware(['auth', 'admin']);
 Route::post('/admin/user', 'AdminController@user_store')->name('admin_user_store')->middleware(['auth', 'admin']);
 
+// News画面
+Route::get('/news', 'NewsController@index')->name('news');
+Route::get('/news/{id}', 'NewsController@detail')->name('news_detail');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
